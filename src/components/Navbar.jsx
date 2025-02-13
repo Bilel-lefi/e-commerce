@@ -8,10 +8,10 @@ function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="header bg-white shadow-md sticky top-0 z-50">
+    <header className="header bg-white group hover:bg-emerald-900 shadow-md sticky top-0 z-50">
       <div className="mx-14 flex justify-between items-center px-6 py-2">
         {/* Logo */}
-        <div className="flex justify-center w-full md:w-auto">
+        <div className="flex justify-center group-hover:bg-white p-1 rounded-full w-full xs:w-auto sm:w-auto md:w-auto">
           <a href="index.html">
             {/* <p className="text-emerald-700 text-nowrap font-bold text-3xl">Rj-déco</p> */}
             <img src={Logo} className="w-16" alt="" srcset="" />
@@ -19,12 +19,12 @@ function Navbar() {
         </div>
 
         {/* Desktop Navigation */}
-        <nav className="justify-center text-gray-500  navigation hidden md:flex w-full justify-start">
+        <nav className="justify-center text-gray-500 group-hover:text-white  navigation hidden md:flex w-full justify-start">
           <ul className="flex gap-5">
             <li className="relative group">
               <a
                 href="#"
-                className=" hover:text-emerald-900 transition-colors"
+                className="  transition-colors"
               >
                 Home
               </a>
@@ -32,25 +32,25 @@ function Navbar() {
             <li>
               <a
                 href="#"
-                className=" hover:text-emerald-900 transition-colors"
+                className="  transition-colors"
               >
-                Products
+                Produit
               </a>
             </li>
             <li className="relative group">
               <a
                 href="#"
-                className=" hover:text-emerald-900 transition-colors"
+                className="  transition-colors"
               >
-                Category
+                About
               </a>
             </li>
             <li>
               <a
                 href="#"
-                className=" hover:text-emerald-900 transition-colors"
+                className="  transition-colors"
               >
-                About
+                Contact
               </a>
             </li>
           </ul>
@@ -58,7 +58,7 @@ function Navbar() {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-2xl text-emerald-700"
+          className="md:hidden text-2xl group-hover:text-white"
           onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
           aria-label="Toggle Mobile Menu"
         >
@@ -75,7 +75,7 @@ function Navbar() {
             {/* Close Button */}
             <button
               onClick={() => setIsMobileMenuOpen(false)}
-              className="text-2xl text-emerald-700"
+              className="text-2xl text-gray-500"
               aria-label="Close Menu"
             >
               <IoCloseOutline />
@@ -85,7 +85,7 @@ function Navbar() {
             <li>
               <a
                 href="#"
-                className="text-emerald-700 hover:text-gray-900 transition-colors"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
               >
                 Home
               </a>
@@ -93,7 +93,7 @@ function Navbar() {
             <li>
               <a
                 href="#"
-                className="text-emerald-700 hover:text-gray-900 transition-colors"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
               >
                 Products
               </a>
@@ -101,7 +101,7 @@ function Navbar() {
             <li>
               <a
                 href="#"
-                className="text-emerald-700 hover:text-gray-900 transition-colors"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
               >
                 Category
               </a>
@@ -109,7 +109,7 @@ function Navbar() {
             <li>
               <a
                 href="#"
-                className="text-emerald-700 hover:text-gray-900 transition-colors"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
               >
                 About
               </a>
@@ -119,7 +119,7 @@ function Navbar() {
             <li>
               <button
                 aria-label="Search"
-                className="text-emerald-700 hover:text-gray-900 transition-colors"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
               >
                 <IoSearchOutline className="text-2xl" />
               </button>
@@ -127,7 +127,7 @@ function Navbar() {
             <li>
               <button
                 aria-label="Profile"
-                className="text-emerald-700 hover:text-gray-900 transition-colors"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
               >
                 <IoPersonOutline className="text-2xl" />
               </button>
@@ -135,7 +135,7 @@ function Navbar() {
             <li>
               <button
                 aria-label="Cart"
-                className="text-emerald-700 hover:text-gray-900 transition-colors"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
               >
                 <IoBagHandleOutline className="text-2xl" />
               </button>
@@ -143,7 +143,7 @@ function Navbar() {
             <li>
               <button
                 aria-label="Favorites"
-                className="text-emerald-700 hover:text-gray-900 transition-colors"
+                className="text-gray-700 hover:text-gray-900 transition-colors"
               >
                 <CiHeart className="text-2xl" />
               </button>
@@ -152,28 +152,28 @@ function Navbar() {
         </div>
 
         {/* Icons (on Desktop) */}
-        <div className="flex gap-5 text-2xl text-gray-500  font-bold hidden md:flex">
+        <div className="flex gap-5 text-2xl group-hover:text-white text-gray-500  font-bold hidden md:flex">
           <button
             aria-label="Search"
-            className="hover:text-emerald-900 transition-colors"
+            className="hover:text-yellow-500 transition-colors"
           >
             <IoSearchOutline />
           </button>
           <button
             aria-label="Profile"
-            className="hover:text-emerald-900 transition-colors"
+            className="hover:text-yellow-500 transition-colors"
           >
             <IoPersonOutline />
           </button>
           <button
             aria-label="Cart"
-            className="hover:text-emerald-900 transition-colors"
+            className="hover:text-yellow-500 transition-colors"
           >
             <IoBagHandleOutline />
           </button>
           <button
             aria-label="Favorites"
-            className="hover:text-emerald-900 transition-colors"
+            className="hover:text-yellow-500 transition-colors"
           >
             <CiHeart />
           </button>
