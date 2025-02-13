@@ -1,6 +1,6 @@
 import React from 'react';
 import a from '../assets/rj-deco-slider.jpg';
-
+import { motion } from 'framer-motion';
 function Home() {
   return (
     <section
