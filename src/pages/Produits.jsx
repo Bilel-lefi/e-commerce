@@ -10,7 +10,7 @@ import CardsProduct from '../components/CardsProduct'
 function Produits() {
   return (
  <>  
- <div className="mt-5 min-h-screen flex flex-col py-7 w-full justify-center items-center">
+ <div id="produits" className="mt-5 min-h-screen flex flex-col py-7 w-full justify-center items-center">
  <h1 className="text-3xl uppercase font-light text-gray-600">- Nos Produits -</h1>
 
  <ul className="flex gap-5 font-semibold my-9 groupe">

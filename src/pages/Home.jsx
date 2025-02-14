@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 function Home() {
   return (
     <section
+    id="home"
       className="h-screen bg-cover bg-center"
       style={{
         backgroundImage: `url(${a})`,
