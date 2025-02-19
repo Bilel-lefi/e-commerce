@@ -1,8 +1,7 @@
 import React from 'react';
 import { CiHeart } from 'react-icons/ci';
 import { IoBagHandleOutline } from 'react-icons/io5';
-import { Link } from 'react-router-dom';  // Import du Link pour la redirection
-
+import { Link } from 'react-router-dom'; 
 function CardsProduct({ images, id }) { // Ajout de l'id du produit pour la redirection dynamique
   return (
     <div className="col-span-1 sm:grid-cols-1 md:grid-cols-3 lg:grid-cols-4 row-span-3 p-2 shadow-lg rounded-lg bg-white">

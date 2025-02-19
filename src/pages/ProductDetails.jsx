@@ -13,7 +13,7 @@ function ProductDetails() {
   };
 
   return (
-    <div className="max-w-lg mx-auto p-6 bg-white rounded-xl shadow-lg text-[#3e3e3e] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl">
+    <div className=" my-16 max-w-lg mx-auto p-6 bg-white rounded-xl shadow-lg text-[#3e3e3e] sm:max-w-xs md:max-w-md lg:max-w-lg xl:max-w-xl">
       {/* Image */}
       <div className="mb-4">
         <img
