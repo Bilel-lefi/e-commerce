@@ -28,12 +28,6 @@ const socialLinks = [
     color: "hover:text-[#53705e]",
     label: "Instagram",
   },
-  {
-    icon: <FaLinkedinIn />,
-    href: "#",
-    color: "hover:text-[#53705e]",
-    label: "LinkedIn",
-  },
 ];
 
 function Footer() {
