@@ -1,6 +1,5 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Import de Link pour la navigation
-import b from "../assets/collection_grid_2.jpg";
 import { IoBagHandleOutline } from "react-icons/io5"; // Import de l'icône
 import { CiHeart } from "react-icons/ci"; // Assurez-vous d'importer également cette icône
 import CardsProduct from "../components/CardsProduct";
@@ -8,11 +7,30 @@ import AOS from "aos"; // Importer AOS
 import "aos/dist/aos.css"; // Importer les styles de AOS
 
 function Produits() {
+  const [produits, setProduits] = useState([]); // État pour stocker les produits
+
   useEffect(() => {
     AOS.init({
       duration: 1000, // Durée des animations
       once: true, // Animation exécutée une seule fois
     });
+
+    // Fonction pour récupérer les produits depuis le backend
+    const fetchProduits = async () => {
+      try {
+        const response = await fetch("http://localhost:8080/api/articles"); // URL de votre API backend
+        if (!response.ok) {
+          throw new Error("Impossible de récupérer les produits");
+        }
+        const data = await response.json(); // Récupérer les données JSON
+        setProduits(data); // Mettre à jour l'état avec les produits récupérés
+        console.log("Produits:", data); // Afficher les produits récupérés dans la console
+      } catch (error) {
+        console.error("Erreur lors de la récupération des produits:", error);
+      }
+    };
+
+    fetchProduits();
   }, []);
 
   return (
@@ -46,27 +64,38 @@ function Produits() {
 
       {/* Grille des Produits avec animation AOS */}
       <div className="mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {[...Array(9)].map((_, i) => (
-          <div
-            key={i}
-            className="relative group bg-white hover:bg-emerald-600 transition-all duration-300"
-            data-aos="fade-up"
-            data-aos-delay={i * 100} // Décalage des animations pour chaque élément
-          >
-            <CardsProduct images={b} />
+        {produits.length > 0 ? (
+          produits.map((produit, i) => (
+            <div
+              key={i}
+              className="relative group bg-white hover:bg-emerald-600 transition-all duration-300"
+              data-aos="fade-up"
+              data-aos-delay={i * 100} // Décalage des animations pour chaque élément
+            >
+              {/* Passer l'image du produit */}
+              {/* La propriété image est en base64, il faut la décoder pour l'afficher */}
+              <CardsProduct produit={produit} />
 
-            {/* Info Card on hover */}
-            <div className="p-5 absolute inset-0 bg-emerald-700 bg-opacity-50 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300">
-              {/* Détails Button */}
-              <Link
-                to={`/product-details/${i}`} // Utilisez un ID unique pour chaque produit
-                className="max-w-max max-h-max px-3 py-2 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] absolute inset-0 flex justify-center items-center bg-transparent text-white rounded-full opacity-0 group-hover:opacity-100 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300"
-              >
-                Détails
-              </Link>
+              {/* Info Card on hover */}
+              <div className="p-5 absolute inset-0 bg-emerald-700 bg-opacity-50 flex flex-col opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                {/* Détails Button */}
+                <Link
+                  to={`/product-details/${produit.id}`} // Utilisez un ID unique pour chaque produit
+                  className="max-w-max max-h-max px-3 py-2 top-1/2 left-1/2 translate-x-[-50%] translate-y-[-50%] absolute inset-0 flex justify-center items-center bg-transparent text-white rounded-full opacity-0 group-hover:opacity-100 group-hover:bg-emerald-600 group-hover:text-white transition-all duration-300"
+                >
+                  Détails
+                </Link>
+              </div>
             </div>
+          ))
+        ) : (
+          <div className="relative min-h-screen">
+          <div className="absolute w-1/12  flex items-center justify-center text-xl sm:text-2xl md:text-3xl whitespace-nowrap">
+            Chargement des produits...
           </div>
-        ))}
+        </div>
+
+        )}
       </div>
     </div>
   );

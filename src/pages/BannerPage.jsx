@@ -9,8 +9,8 @@ function BannerPage() {
     <>
       <div className="mt-5 min-h-screen flex flex-col py-7 w-full justify-center items-center">
         <h1
-      className="text-4xl font-bold border-b-2 border-gray-600 font-light text-gray-600 uppercase pb-2"
-        data-aos="fade-up"
+          className="text-4xl font-bold border-b-2 border-gray-600 font-light text-gray-600 uppercase pb-2"
+          data-aos="fade-up"
         >
           Notre Travail
         </h1>
