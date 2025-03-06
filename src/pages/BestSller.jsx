@@ -12,7 +12,7 @@ function BestSller() {
  <div className="mt-5 flex py-7 w-full justify-center items-center">
  <h1 className="text-3xl uppercase font-light text-gray-600">- Produit Populaire -</h1>
  </div>
-<div className="m-10 grid grid-cols-7 grid-rows-6 gap-4">
+<div className=" m-10 grid grid-cols-7 grid-rows-6 gap-4">
 <div className="col-span-3 row-span-6 relative group">
   <img src={a} alt="Custom Neon Tableaux" className="w-full h-auto" />
 
