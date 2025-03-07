@@ -9,30 +9,29 @@ const Panier = ({ onClose }) => {
   const [items, setItems] = useState([]);
 
   useEffect(() => {
-    // Charger les produits depuis le localStorage
     const storedItems = JSON.parse(localStorage.getItem("basket")) || [];
     setItems(storedItems);
   }, []);
 
-  // Calculer le total du panier
   const total = items.reduce((acc, item) => acc + item.price, 0);
 
-  // Fonction pour supprimer un article du panier
   const removeItem = (id) => {
-    // Filtrer l'article à supprimer
     const updatedItems = items.filter((item) => item.id !== id);
     setItems(updatedItems);
-    // Mettre à jour le localStorage
     localStorage.setItem("basket", JSON.stringify(updatedItems));
   };
 
   return (
-    <div onMouseLeave={onClose} className=" fixed top-0 right-0 h-full overflow-auto w-72 bg-emerald-900 text-white p-4 shadow-lg z-50">
-      <h2 className="text-xl font-bold mb-4 flex items-center justify-between gap-2">
+    <div
+      onMouseLeave={onClose}
+      className="fixed top-0 right-0 h-full w-72 md:w-80 lg:w-96 bg-emerald-900 text-white p-4 shadow-lg z-50"
+    >
+      <h2 className="text-xl font-bold mb-4 flex justify-between items-center">
         <IoBagHandleOutline className="text-2xl" /> Mon Panier
         <button onClick={onClose} className="text-white hover:text-red-500 text-xl">x</button>
       </h2>
-      <ul className="flex-1 overflow-y-auto space-y-3">
+      
+      <ul className="overflow-y-auto space-y-3 max-h-[70vh]">
         {items.length > 0 ? (
           items.map((item) => (
             <li key={item.id} className="flex justify-between items-center bg-emerald-700 px-3 py-2 rounded-lg">
@@ -40,10 +39,7 @@ const Panier = ({ onClose }) => {
                 <p className="font-medium">{item.name}</p>
                 <span className="text-sm text-gray-200">{item.price.toFixed(2)} TND</span>
               </div>
-              <button
-                className="text-white hover:text-red-500"
-                onClick={() => removeItem(item.id)}
-              >
+              <button onClick={() => removeItem(item.id)} className="text-white hover:text-red-500">
                 <IoCloseOutline />
               </button>
             </li>
@@ -52,15 +48,19 @@ const Panier = ({ onClose }) => {
           <li className="text-center text-gray-300">Votre panier est vide</li>
         )}
       </ul>
+
       <div className="border-t border-gray-300 mt-4 pt-4">
         <p className="font-semibold">Total: {total.toFixed(2)} TND</p>
+        <a href="passer-commande">
         <button className="w-full mt-3 bg-white text-emerald-900 font-bold py-2 rounded-lg hover:bg-gray-100 transition">
           Passer la commande
         </button>
+        </a>
       </div>
     </div>
   );
 };
+
 
 function Navbar() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -68,17 +68,13 @@ function Navbar() {
 
   return (
     <header className="header bg-white group hover:bg-emerald-900 shadow-md sticky top-0 z-50">
-      <div className="mx-14 flex justify-between items-center px-6 py-2">
-        <div className="flex justify-center group-hover:bg-white p-1 rounded-full w-full xs:w-auto sm:w-auto md:w-auto">
-          <a href="index.html">
-            <Link to="/">
-              <img src={Logo} className="w-16" alt="Logo" />
-            </Link>
-          </a>
-        </div>
+      <div className="mx-4 md:mx-14 flex justify-between items-center px-4 py-2">
+        <Link to="/">
+          <img src={Logo} className="w-14 md:w-16" alt="Logo" />
+        </Link>
 
-        <nav className="justify-center text-gray-500 group-hover:text-white hidden md:flex w-full justify-start">
-          <ul className="flex gap-5">
+        <nav className="hidden md:flex text-gray-500 group-hover:text-white w-full justify-center">
+          <ul className="flex gap-4 md:gap-5">
             <li><Link to="/" className="transition-colors">Accueil</Link></li>
             <li><Link to="/#produits" className="transition-colors">Produits</Link></li>
             <li><Link to="/rj-deco/about" className="transition-colors">About</Link></li>
@@ -86,15 +82,7 @@ function Navbar() {
           </ul>
         </nav>
 
-        <button
-          className="md:hidden text-2xl group-hover:text-white"
-          onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-          aria-label="Toggle Mobile Menu"
-        >
-          &#9776;
-        </button>
-
-        <div className="flex gap-5 text-2xl group-hover:text-white text-gray-500 font-bold hidden md:flex">
+        <div className="flex items-center gap-4 text-2xl text-gray-500 group-hover:text-white">
           <button className="hover:text-yellow-500"><IoSearchOutline /></button>
           <button
             className="hover:text-yellow-500"
@@ -105,8 +93,26 @@ function Navbar() {
           <Link to="/rj-deco/favoris">
             <button className="hover:text-yellow-500"><CiHeart /></button>
           </Link>
+
+          <button
+            className="md:hidden text-2xl"
+            onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+          >
+            &#9776;
+          </button>
         </div>
       </div>
+
+      {isMobileMenuOpen && (
+        <nav className="md:hidden bg-emerald-900 text-white p-4 space-y-4">
+          <ul className="space-y-2">
+            <li><Link to="/" onClick={() => setIsMobileMenuOpen(false)}>Accueil</Link></li>
+            <li><Link to="/#produits" onClick={() => setIsMobileMenuOpen(false)}>Produits</Link></li>
+            <li><Link to="/rj-deco/about" onClick={() => setIsMobileMenuOpen(false)}>About</Link></li>
+            <li><Link to="/rj-deco/contact" onClick={() => setIsMobileMenuOpen(false)}>Contact</Link></li>
+          </ul>
+        </nav>
+      )}
 
       {showPanier && <Panier onClose={() => setShowPanier(false)} />}
     </header>

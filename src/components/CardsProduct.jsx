@@ -7,7 +7,9 @@ import { toast, ToastContainer } from 'react-toastify';  // Importer Toastify
 // Fonction pour ajouter un produit au panier
 const addToBasket = (id, name, price, images) => {
   const basket = JSON.parse(localStorage.getItem('basket')) || [];
-  const product = { id, name, price, images };
+  const quantity =1
+
+  const product = { id, name, price, images,quantity };
 console.log(id)
   // Vérifier si le produit existe déjà dans le panier
   if (!basket.some(item => item.id === id)) {

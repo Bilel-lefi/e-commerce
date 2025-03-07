@@ -1,0 +1,38 @@
+.social-icons-container {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    margin-top: 3rem;
+  }
+  
+  .icon {
+    font-size: 3rem;
+    transition: transform 0.3s ease-in-out;
+    animation: floating 3s infinite ease-in-out;
+  }
+  
+  .facebook {
+    color: #3b5998;
+  }
+  
+  .instagram {
+    color: #e4405f;
+  }
+  
+  .whatsapp {
+    color: #25d366;
+  }
+  
+  .icon:hover {
+    transform: scale(1.2);
+  }
+  
+  @keyframes floating {
+    0%, 100% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+  }
+  

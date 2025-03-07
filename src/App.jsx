@@ -1,10 +1,12 @@
 import React, { lazy, Suspense } from 'react';
 import './App.css';
+import "./assets/style.css"
 import MainLayout from './layouts/MainLayouts';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Loading from './pages/Loading';
 import NotFound from './pages/NotFound';
 import ProductDetails from './pages/ProductDetails';
+import OrderDetail from './pages/OrderDetail';
 
 // Lazy-loaded components
 const Pages = lazy(() => import('./pages/Pages'));
@@ -17,6 +19,7 @@ function App() {
         <Suspense fallback={<Loading/>}>
           <Routes>
             <Route path="/" element={<Pages />} />
+            <Route path="/passer-commande" element={<OrderDetail />} />
             <Route path="/product-details" element={<ProductDetails />} />
             <Route path="/rj-deco/favoris" element={<LikedProduct />} />
             <Route path="*" element={<NotFound/>}></Route>
