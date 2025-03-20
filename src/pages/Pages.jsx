@@ -3,6 +3,7 @@ import Home from './Home'
 import BestSller from './BestSller'
 import Produits from './Produits'
 import BannerPage from './BannerPage'
+import About from './About'
 
 function Pages() {
   return (
@@ -11,6 +12,7 @@ function Pages() {
       <BestSller/>
       <Produits/>
       <BannerPage/>
+      <About/>
     </>
   )
 }

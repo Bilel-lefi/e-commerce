@@ -51,11 +51,12 @@ const Panier = ({ onClose }) => {
 
       <div className="border-t border-gray-300 mt-4 pt-4">
         <p className="font-semibold">Total: {total.toFixed(2)} TND</p>
-        <a href="passer-commande">
+        <Link to={"passer-commande"}>
         <button className="w-full mt-3 bg-white text-emerald-900 font-bold py-2 rounded-lg hover:bg-gray-100 transition">
           Passer la commande
         </button>
-        </a>
+        </Link>
+        
       </div>
     </div>
   );

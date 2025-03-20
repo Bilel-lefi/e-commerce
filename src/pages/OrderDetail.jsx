@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { toast, ToastContainer } from 'react-toastify';  // Importer Toastify
-import 'react-toastify/dist/ReactToastify.css';  // Importer les styles
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { FaRegTrashCan } from "react-icons/fa6";
 
 const OrderDetail = () => {
@@ -9,72 +9,77 @@ const OrderDetail = () => {
     firstName: '',
     lastName: '',
     city: '',
+    gov: '',
     phone: '',
   });
 
   const [basket, setBasket] = useState([]);
-  const [isEmpty, setEmpty] = useState(true)
-  // Récupérer les produits depuis le localStorage à l'initialisation du composant
+
   useEffect(() => {
     const storedBasket = JSON.parse(localStorage.getItem('basket')) || [];
     setBasket(storedBasket);
-    if (basket.length > 0) { setEmpty(false)}
   }, []);
 
-  // Fonction pour supprimer un produit du localStorage
   const handleRemoveProduct = (productId) => {
     const updatedBasket = basket.filter(product => product.id !== productId);
     localStorage.setItem('basket', JSON.stringify(updatedBasket));
     setBasket(updatedBasket);
-    toast.success("Produit supprimé du panier!");  // Notification de succès
+    toast.success("Produit supprimé du panier !");
   };
 
-  // Fonction pour modifier la quantité d'un produit
   const handleQuantityChange = (productId, amount) => {
     const updatedBasket = basket.map(product => {
       if (product.id === productId) {
-        return {
-          ...product,
-          quantity: Math.max(1, product.quantity + amount), // Assure une quantité >= 1
-        };
+        return { ...product, quantity: Math.max(1, product.quantity + amount) };
       }
       return product;
     });
     localStorage.setItem('basket', JSON.stringify(updatedBasket));
     setBasket(updatedBasket);
-    //toast.info(`Quantité modifiée ! Nouvelle quantité: ${updatedBasket.find(product => product.id === productId).quantity}`);
   };
 
-  // Fonction pour gérer les changements dans le formulaire
   const handleChange = (e) => {
     const { name, value } = e.target;
     setOrder({ ...order, [name]: value });
   };
 
-  // Fonction de soumission du formulaire
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    const orderWithBasket = { ...order, basket }; // Inclure le panier dans la commande
-    console.log("Commande soumise:", orderWithBasket);  // Afficher la commande avec les produits et leurs quantités dans la console
-    try {
-      const response = await axios.post('http://localhost:5000/api/orders', orderWithBasket);
-      console.log('Order created:', response.data);
-      toast.success('Commande passée avec succès !');  // Notification de succès
-      setOrder({ firstName: '', lastName: '', city: '', phone: '' });
-    } catch (error) {
-      console.error('Erreur lors de la commande:', error);
-      toast.error('Une erreur est survenue.');  // Notification d'erreur
-    }
-  };
-
-  // Calculer le total pour chaque produit
-  const calculateProductTotal = (price, quantity) => {
-    return (price * quantity).toFixed(2);
-  };
-
-  // Calculer le total de la commande
   const calculateTotal = () => {
     return basket.reduce((total, product) => total + (product.price * product.quantity), 0).toFixed(2);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (basket.length === 0) {
+      toast.error("Votre panier est vide !");
+      return;
+    }
+
+    const orderData = {
+      firstName: order.firstName,
+      lastName: order.lastName,
+      phone: order.phone,
+      shippingAddress: {
+        city: order.city,
+        gov: order.gov
+      },
+      products: basket.map(product => ({
+        name: product.name,
+        price: product.price,
+        quantity: product.quantity
+      })),
+      totalPrice: calculateTotal(),
+      status: "En instance",
+    };
+
+    try {
+      await axios.post('http://localhost:4000/api/order', orderData);
+      toast.success('Commande passée avec succès !');
+      setOrder({ firstName: '', lastName: '', city: '', gov: '', phone: '' });
+      localStorage.removeItem('basket');
+      setBasket([]);
+    } catch (error) {
+      toast.error('Erreur lors de la commande.');
+    }
   };
 
   return (
@@ -97,6 +102,11 @@ const OrderDetail = () => {
       </div>
 
       <div className="mb-4">
+        <label className="block mb-2">Gouvernorat</label>
+        <input type="text" name="gov" value={order.gov} onChange={handleChange} required className="w-full p-2 border rounded" />
+      </div>
+
+      <div className="mb-4">
         <label className="block mb-2">Téléphone</label>
         <input type="tel" name="phone" value={order.phone} onChange={handleChange} required className="w-full p-2 border rounded" />
       </div>
@@ -113,44 +123,25 @@ const OrderDetail = () => {
                 <span>${product.price}</span>
               </div>
               <div className="flex items-center gap-4">
-                <button
-                  type="button"
-                  onClick={() => handleQuantityChange(product.id, -1)}
-                  className="bg-gray-300 px-4 py-2 rounded"
-                >
-                  -
-                </button>
+                <button type="button" onClick={() => handleQuantityChange(product.id, -1)} className="bg-gray-300 px-4 py-2 rounded">-</button>
                 <span>{product.quantity}</span>
-                <button
-                  type="button"
-                  onClick={() => handleQuantityChange(product.id, 1)}
-                  className="bg-gray-300 px-4 py-2 rounded"
-                >
-                  +
-                </button>
+                <button type="button" onClick={() => handleQuantityChange(product.id, 1)} className="bg-gray-300 px-4 py-2 rounded">+</button>
               </div>
-              <span>${calculateProductTotal(product.price, product.quantity)}</span>
-              <button
-                type="button"
-                onClick={() => handleRemoveProduct(product.id)}
-                className="text-red-500 "
-              >
-                <FaRegTrashCan/>
+              <span>${(product.price * product.quantity).toFixed(2)}</span>
+              <button type="button" onClick={() => handleRemoveProduct(product.id)} className="text-red-500">
+                <FaRegTrashCan />
               </button>
             </li>
           ))
         )}
       </ul>
 
-      <div className="text-xl font-bold">
-        Total: ${calculateTotal()}
-      </div>
+      <div className="text-xl font-bold">Total: ${calculateTotal()}</div>
 
-      <button type="submit" disabled={isEmpty} className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 mt-4">
-        {isEmpty ? "Passer la commande" : "Ajouter des articles pour passer une commande" }
+      <button type="submit" className="w-full bg-blue-600 text-white py-2 rounded hover:bg-blue-700 mt-4">
+        Passer la commande
       </button>
 
-      {/* Ajouter le container Toastify */}
       <ToastContainer />
     </form>
   );

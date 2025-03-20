@@ -37,7 +37,7 @@ function Produits() {
     if (category === "Tous") {
       setFilteredData(data);
     } else {
-      const filtered = data.filter((product) => product.categories === category);
+      const filtered = data.filter((product) => product.category === category);
       setFilteredData(filtered);
     }
   };
@@ -77,13 +77,13 @@ function Produits() {
         </li>
         <li
           className="hover:text-emerald-900 cursor-pointer"
-          onClick={() => handleCategoryFilter("Accessoires")}
+          onClick={() => handleCategoryFilter("Led Neon")}
         >
-          Accessoires
+          Led Neon
         </li>
       </ul>
 
-      <div className="mx-4 sm:mx-8 lg:mx-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+      <div className=" mx-4 sm:mx-8 lg:mx-16 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         {filteredData.map((product) => (
           <CardsProduct
             key={product._id}

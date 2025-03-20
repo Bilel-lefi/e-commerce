@@ -20,7 +20,7 @@ function App() {
           <Routes>
             <Route path="/" element={<Pages />} />
             <Route path="/passer-commande" element={<OrderDetail />} />
-            <Route path="/product-details" element={<ProductDetails />} />
+            <Route path="/product-details/:id" element={<ProductDetails />} />
             <Route path="/rj-deco/favoris" element={<LikedProduct />} />
             <Route path="*" element={<NotFound/>}></Route>
           </Routes>
